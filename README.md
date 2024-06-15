@@ -55,6 +55,21 @@ localStorage.setItem("token":"eZ&8*!CjS")
 }
 ```
 
+- Here is how we get our token in backend
+
+``` javascript
+const authHeader = req.headers.authorization;
+  console.log(authHeader)
+  
+  if (!authHeader) {
+    return res.status(401).json({ message: "Not Authenticated!" });
+  }
+
+  const token = authHeader.split(' ')[1];
+  console.log(token)
+if (!token) return res.status(401).json({ message: "Not Authenticated!" });
+```
+
 - After getting token from front end we need to verify it first. For that we use **JWT.verify** method
 
 ``` javascript
