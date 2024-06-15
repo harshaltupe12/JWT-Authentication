@@ -78,6 +78,8 @@ app.post("/api/login", (req, res) => {
   }
 });
 
+
+
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -95,6 +97,12 @@ const verifyToken = (req, res, next) => {
     res.status(401).json("You are not authenticated");
   }
 };
+
+app.post("/api/logout", verifyToken, (req, res) => {
+  const refreshToken = req.body.token;
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.status(200).json("You logged out successfully.");
+});
 
 app.delete("/api/users/:userId", verifyToken, (req, res) => {
   if (req.user.id === req.params.userId || req.user.isAdmin) {
